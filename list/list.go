@@ -123,3 +123,6 @@ func delete[T any](slice *[]T, i int) {
 	s = s[:len(s)-1]
 	*slice = s
 }
+
+func test() {
+}
