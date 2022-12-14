@@ -22,7 +22,7 @@ type List[E any] struct {
 	size int
 }
 
-func NewList[E any]() *List[E] {
+func New[E any]() *List[E] {
 	var limiter Cell[E]
 	return &List[E]{head: &limiter}
 }

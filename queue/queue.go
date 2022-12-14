@@ -8,8 +8,8 @@ type Queue[E any] struct {
 	list *dlist.List[E]
 }
 
-func NewQueue[E any]() *Queue[E] {
-	return &Queue[E]{list: dlist.NewList[E]()}
+func New[E any]() *Queue[E] {
+	return &Queue[E]{list: dlist.New[E]()}
 }
 
 func (q *Queue[E]) String() string {

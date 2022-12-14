@@ -8,8 +8,8 @@ type Stack[E any] struct {
 	list *slist.List[E]
 }
 
-func NewStack[E any]() *Stack[E] {
-	return &Stack[E]{list: slist.NewList[E]()}
+func New[E any]() *Stack[E] {
+	return &Stack[E]{list: slist.New[E]()}
 }
 
 func (s *Stack[E]) String() string {

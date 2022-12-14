@@ -24,7 +24,7 @@ type List[E any] struct {
 	size int
 }
 
-func NewList[E any]() *List[E] {
+func New[E any]() *List[E] {
 	tail := &Cell[E]{}
 	head := &Cell[E]{}
 	head.next = tail
