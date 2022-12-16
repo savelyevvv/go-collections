@@ -1,6 +1,6 @@
 package stack
 
-import "github.com/savelyevvv/go-collections/slist"
+import slist "github.com/savelyevvv/go-collections/sll"
 
 const ErrEmptyStack = "stack is empty"
 

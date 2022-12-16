@@ -1,6 +1,6 @@
 package queue
 
-import "github.com/savelyevvv/go-collections/dlist"
+import dlist "github.com/savelyevvv/go-collections/dll"
 
 const ErrEmptyQueue = "queue is empty"
 
