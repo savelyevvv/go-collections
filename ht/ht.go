@@ -7,24 +7,30 @@ import (
 	"github.com/savelyevvv/go-collections/sll"
 )
 
-// HashTable
-// .Insert
-// .Search
-// .Delete
+const ErrNoSuchItem = HashTableError("no such item in hash table")
 
-// Hash()
+type HashTableError string
+
+func (e HashTableError) Error() string {
+	return string(e)
+}
+
+type pair[E any] struct {
+	key   string
+	value E
+}
 
 type HashTable[E any] struct {
-	buckets []*sll.List[E]
+	buckets []*sll.List[pair[E]]
 	size    int
 }
 
-func New[E any](size int) *HashTable[E] {
+func New[E any](capacity int) *HashTable[E] {
 	t := &HashTable[E]{
-		buckets: make([]*sll.List[E], size),
+		buckets: make([]*sll.List[pair[E]], capacity),
 	}
 	for i := range t.buckets {
-		t.buckets[i] = sll.New[E]()
+		t.buckets[i] = sll.New[pair[E]]()
 	}
 	return t
 }
@@ -34,11 +40,53 @@ func (t *HashTable[E]) String() string {
 	for _, bucket := range t.buckets {
 		if bucket.Size() > 0 {
 			for _, element := range bucket.ToSlice() {
-				ss = append(ss, fmt.Sprintf("%v", element))
+				ss = append(ss, fmt.Sprintf("%q: %v", element.key, element.value))
 			}
 		}
 	}
-	return fmt.Sprintf("[%s]", strings.Join(ss, ","))
+	return fmt.Sprintf("{%s}", strings.Join(ss, ", "))
+}
+
+func (t *HashTable[E]) Size() int {
+	return t.size
+}
+
+func (t *HashTable[E]) Get(key string) (E, bool) {
+	var (
+		value E
+		ok    bool
+	)
+	bucket := t.buckets[hash(key, len(t.buckets))]
+	if index := bucket.IndexOf(pair[E]{key: key}, func(a, b pair[E]) bool {
+		return a.key == b.key
+	}); index != -1 {
+		value = bucket.Get(index).value
+		ok = true
+	}
+	return value, ok
+}
+
+func (t *HashTable[E]) Put(key string, value E) {
+	bucket := t.buckets[hash(key, len(t.buckets))]
+	p := pair[E]{key: key, value: value}
+	if index := bucket.IndexOf(p, func(a, b pair[E]) bool {
+		return a.key == b.key
+	}); index == -1 {
+		bucket.Add(0, p)
+		t.size++
+	} else {
+		bucket.Set(index, p)
+	}
+}
+
+func (t *HashTable[E]) Delete(key string) {
+	bucket := t.buckets[hash(key, len(t.buckets))]
+	if index := bucket.IndexOf(pair[E]{key: key}, func(a, b pair[E]) bool {
+		return a.key == b.key
+	}); index != -1 {
+		bucket.Pop(index)
+		t.size--
+	}
 }
 
 func hash(key string, size int) int {
