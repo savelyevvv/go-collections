@@ -103,6 +103,16 @@ func (l *List[E]) IndexOf(element E, equal func(a, b E) bool) int {
 	return index
 }
 
+func (l *List[E]) Remove(e E, equal func(a, b E) bool) bool {
+	var result bool
+	node := l.findNodeBefore(e, equal)
+	if node != nil {
+		deleteAfter(node)
+		result = true
+	}
+	return result
+}
+
 func (l *List[E]) ToSlice() []E {
 	var (
 		slice []E
@@ -139,6 +149,7 @@ func (l *List[E]) findNode(value E, equal func(a, b E) bool) *Cell[E] {
 			node = temp
 			break
 		}
+		temp = temp.next
 	}
 	return node
 }
@@ -149,11 +160,12 @@ func (l *List[E]) findNodeBefore(value E, equal func(a, b E) bool) *Cell[E] {
 		temp *Cell[E]
 	)
 	temp = l.head
-	for temp.next == nil {
+	for temp.next != nil {
 		if equal(temp.next.data, value) {
 			node = temp
 			break
 		}
+		temp = temp.next
 	}
 	return node
 }
