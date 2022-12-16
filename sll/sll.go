@@ -84,14 +84,14 @@ func (l *List[E]) Set(index int, element E) {
 	l.getCell(index).data = element
 }
 
-func (l *List[E]) IndexOf(element E, equal func(a, b E) bool) int {
+func (l *List[E]) FindIndex(callback func(e E) bool) int {
 	var (
 		index int
 		temp  *Cell[E]
 	)
 	temp = l.head.next
 	for temp != nil {
-		if equal(temp.data, element) {
+		if callback(temp.data) {
 			break
 		}
 		index++

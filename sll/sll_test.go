@@ -4,29 +4,29 @@ import (
 	"fmt"
 )
 
-func ExampleList_IndexOf_emptyList() {
+func ExampleList_FindIndex_emptyList() {
 	list := New[int]()
-	index := list.IndexOf(10, func(a, b int) bool { return a == b })
+	index := list.FindIndex(func(e int) bool { return e == 10 })
 	fmt.Println(index)
 	// Output: -1
 }
 
-func ExampleList_IndexOf_hasElement() {
+func ExampleList_FindIndex_hasElement() {
 	list := New[int]()
 	list.Append(10)
 	list.Append(15)
 	list.Append(20)
-	index := list.IndexOf(15, func(a, b int) bool { return a == b })
+	index := list.FindIndex(func(e int) bool { return e == 15 })
 	fmt.Println(index)
 	// Output: 1
 }
 
-func ExampleList_IndexOf_doesNotHaveElement() {
+func ExampleList_FindIndex_doesNotHaveElement() {
 	list := New[int]()
 	list.Append(10)
 	list.Append(15)
 	list.Append(20)
-	index := list.IndexOf(25, func(a, b int) bool { return a == b })
+	index := list.FindIndex(func(e int) bool { return e == 25 })
 	fmt.Println(index)
 	// Output: -1
 }
