@@ -1,6 +1,8 @@
 package sll
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func ExampleList_IndexOf_emptyList() {
 	list := New[int]()
@@ -27,4 +29,21 @@ func ExampleList_IndexOf_doesNotHaveElement() {
 	index := list.IndexOf(25, func(a, b int) bool { return a == b })
 	fmt.Println(index)
 	// Output: -1
+}
+
+func ExampleList_ToSlice_emptyList() {
+	list := New[int]()
+	slice := list.ToSlice()
+	fmt.Println(slice)
+	// Output: []
+}
+
+func ExampleList_ToSlice_nonEmptyList() {
+	list := New[int]()
+	list.Append(10)
+	list.Append(15)
+	list.Append(20)
+	slice := list.ToSlice()
+	fmt.Println(slice)
+	// Output: [10 15 20]
 }

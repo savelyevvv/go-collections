@@ -103,6 +103,19 @@ func (l *List[E]) IndexOf(element E, equal func(a, b E) bool) int {
 	return index
 }
 
+func (l *List[E]) ToSlice() []E {
+	var (
+		slice []E
+		temp  *Cell[E]
+	)
+	temp = l.head.next
+	for temp != nil {
+		slice = append(slice, temp.data)
+		temp = temp.next
+	}
+	return slice
+}
+
 func (l *List[E]) getCell(index int) *Cell[E] {
 	var (
 		position = -1
