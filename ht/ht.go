@@ -40,3 +40,11 @@ func (t *HashTable[E]) String() string {
 	}
 	return fmt.Sprintf("[%s]", strings.Join(ss, ","))
 }
+
+func hash(key string, size int) int {
+	var total int
+	for _, r := range key {
+		total += int(r)
+	}
+	return total % size
+}
