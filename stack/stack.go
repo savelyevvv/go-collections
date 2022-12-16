@@ -1,15 +1,15 @@
 package stack
 
-import slist "github.com/savelyevvv/go-collections/sll"
+import "github.com/savelyevvv/go-collections/sll"
 
 const ErrEmptyStack = "stack is empty"
 
 type Stack[E any] struct {
-	list *slist.List[E]
+	list *sll.List[E]
 }
 
 func New[E any]() *Stack[E] {
-	return &Stack[E]{list: slist.New[E]()}
+	return &Stack[E]{list: sll.New[E]()}
 }
 
 func (s *Stack[E]) String() string {

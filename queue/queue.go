@@ -1,15 +1,15 @@
 package queue
 
-import dlist "github.com/savelyevvv/go-collections/dll"
+import "github.com/savelyevvv/go-collections/dll"
 
 const ErrEmptyQueue = "queue is empty"
 
 type Queue[E any] struct {
-	list *dlist.List[E]
+	list *dll.List[E]
 }
 
 func New[E any]() *Queue[E] {
-	return &Queue[E]{list: dlist.New[E]()}
+	return &Queue[E]{list: dll.New[E]()}
 }
 
 func (q *Queue[E]) String() string {

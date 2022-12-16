@@ -1,4 +1,4 @@
-package dlist
+package dll
 
 import (
 	"fmt"
