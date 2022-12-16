@@ -21,6 +21,17 @@ func ExampleHashTable_Put() {
 	// Output: {"xela": 45, "alex": 35, "lora": 25} 3
 }
 
+func ExampleHashTable_Put_replace() {
+	capacity := 100
+	table := New[int](capacity)
+	table.Put("lora", 25)
+	table.Put("alex", 35)
+	table.Put("xela", 45)
+	table.Put("alex", 55)
+	fmt.Println(table, table.Size())
+	// Output: {"alex": 55, "xela": 45, "lora": 25} 3
+}
+
 func ExampleHashTable_Get_contains() {
 	capacity := 100
 	table := New[int](capacity)

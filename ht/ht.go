@@ -68,15 +68,12 @@ func (t *HashTable[E]) Get(key string) (E, bool) {
 
 func (t *HashTable[E]) Put(key string, value E) {
 	bucket := t.buckets[hash(key, len(t.buckets))]
-	p := pair[E]{key: key, value: value}
-	if index := bucket.IndexOf(p, func(a, b pair[E]) bool {
-		return a.key == b.key
-	}); index == -1 {
-		bucket.Add(0, p)
+	if ok := bucket.Remove(func(e pair[E]) bool {
+		return e.key == key
+	}); !ok {
 		t.size++
-	} else {
-		bucket.Set(index, p)
 	}
+	bucket.Add(0, pair[E]{key: key, value: value})
 }
 
 func (t *HashTable[E]) Delete(key string) {
