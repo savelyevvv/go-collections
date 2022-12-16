@@ -81,8 +81,8 @@ func (t *HashTable[E]) Put(key string, value E) {
 
 func (t *HashTable[E]) Delete(key string) {
 	bucket := t.buckets[hash(key, len(t.buckets))]
-	if ok := bucket.Remove(pair[E]{key: key}, func(a, b pair[E]) bool {
-		return a.key == b.key
+	if ok := bucket.Remove(func(e pair[E]) bool {
+		return e.key == key
 	}); ok {
 		t.size--
 	}
