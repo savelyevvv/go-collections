@@ -54,16 +54,16 @@ func (t *HashTable[E]) Size() int {
 func (t *HashTable[E]) Get(key string) (E, bool) {
 	var (
 		value E
-		ok    bool
+		found bool
 	)
 	bucket := t.buckets[hash(key, len(t.buckets))]
-	if index := bucket.IndexOf(pair[E]{key: key}, func(a, b pair[E]) bool {
-		return a.key == b.key
-	}); index != -1 {
-		value = bucket.Get(index).value
-		ok = true
+	if p, ok := bucket.Find(func(p pair[E]) bool {
+		return p.key == key
+	}); ok {
+		value = p.value
+		found = true
 	}
-	return value, ok
+	return value, found
 }
 
 func (t *HashTable[E]) Put(key string, value E) {
