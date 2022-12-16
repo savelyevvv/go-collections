@@ -84,6 +84,25 @@ func (l *List[E]) Set(index int, element E) {
 	l.getCell(index).data = element
 }
 
+func (l *List[E]) IndexOf(element E, equal func(a, b E) bool) int {
+	var (
+		index int
+		temp  *Cell[E]
+	)
+	temp = l.head.next
+	for temp != nil {
+		if equal(temp.data, element) {
+			break
+		}
+		index++
+		temp = temp.next
+	}
+	if index == l.size {
+		index = -1
+	}
+	return index
+}
+
 func (l *List[E]) getCell(index int) *Cell[E] {
 	var (
 		position = -1
