@@ -113,6 +113,23 @@ func (l *List[E]) Remove(e E, equal func(a, b E) bool) bool {
 	return result
 }
 
+func (l *List[E]) Find(callback func(e E) bool) (E, bool) {
+	var (
+		element E
+		ok      bool
+	)
+	temp := l.head.next
+	for temp != nil {
+		if callback(temp.data) {
+			element = temp.data
+			ok = true
+			break
+		}
+		temp = temp.next
+	}
+	return element, ok
+}
+
 func (l *List[E]) ToSlice() []E {
 	var (
 		slice []E

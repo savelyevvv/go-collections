@@ -67,3 +67,23 @@ func ExampleList_Remove_doesNotContain() {
 	fmt.Println(rsl, list)
 	// Output: false [10, 15, 20]
 }
+
+func ExampleList_Find_contains() {
+	list := New[int]()
+	list.Append(10)
+	list.Append(15)
+	list.Append(20)
+	element, ok := list.Find(func(e int) bool { return e%2 == 1 })
+	fmt.Println(element, ok)
+	// Output: 15 true
+}
+
+func ExampleList_Find_doesNotContain() {
+	list := New[int]()
+	list.Append(10)
+	list.Append(15)
+	list.Append(20)
+	element, ok := list.Find(func(e int) bool { return e == 25 })
+	fmt.Println(element, ok)
+	// Output: 0 false
+}
