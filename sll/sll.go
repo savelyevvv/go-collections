@@ -103,9 +103,9 @@ func (l *List[E]) IndexOf(element E, equal func(a, b E) bool) int {
 	return index
 }
 
-func (l *List[E]) Remove(e E, equal func(a, b E) bool) bool {
+func (l *List[E]) Remove(callback func(e E) bool) bool {
 	var result bool
-	node := l.findNodeBefore(e, equal)
+	node := l.findNodeBefore(callback)
 	if node != nil {
 		deleteAfter(node)
 		result = true
@@ -155,14 +155,14 @@ func (l *List[E]) getCell(index int) *Cell[E] {
 	return temp
 }
 
-func (l *List[E]) findNode(value E, equal func(a, b E) bool) *Cell[E] {
+func (l *List[E]) findNode(callback func(e E) bool) *Cell[E] {
 	var (
 		node *Cell[E]
 		temp *Cell[E]
 	)
 	temp = l.head.next
 	for temp != nil {
-		if equal(temp.data, value) {
+		if callback(temp.data) {
 			node = temp
 			break
 		}
@@ -171,14 +171,14 @@ func (l *List[E]) findNode(value E, equal func(a, b E) bool) *Cell[E] {
 	return node
 }
 
-func (l *List[E]) findNodeBefore(value E, equal func(a, b E) bool) *Cell[E] {
+func (l *List[E]) findNodeBefore(callback func(e E) bool) *Cell[E] {
 	var (
 		node *Cell[E]
 		temp *Cell[E]
 	)
 	temp = l.head
 	for temp.next != nil {
-		if equal(temp.next.data, value) {
+		if callback(temp.next.data) {
 			node = temp
 			break
 		}

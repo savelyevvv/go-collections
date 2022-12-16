@@ -53,7 +53,7 @@ func ExampleList_Remove_contains() {
 	list.Append(10)
 	list.Append(15)
 	list.Append(20)
-	rsl := list.Remove(15, func(a, b int) bool { return a == b })
+	rsl := list.Remove(func(e int) bool { return e == 15 })
 	fmt.Println(rsl, list)
 	// Output: true [10, 20]
 }
@@ -63,7 +63,7 @@ func ExampleList_Remove_doesNotContain() {
 	list.Append(10)
 	list.Append(15)
 	list.Append(20)
-	rsl := list.Remove(25, func(a, b int) bool { return a == b })
+	rsl := list.Remove(func(e int) bool { return e == 25 })
 	fmt.Println(rsl, list)
 	// Output: false [10, 15, 20]
 }
